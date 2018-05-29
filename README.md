@@ -1,5 +1,5 @@
-# jsVoice
-Library to help you to create voice agents in browser
+# jsBotVoice
+Library to help you to create voice bots in the browser
 
 ## Load
 
@@ -18,17 +18,17 @@ var voice = new Voice("es");//spanish
 var voice = new Voice("en");//english
 ```
 
-You need initialize object to start to heard user. Probably browser ask user for permission to use microphone.
+You need initialize object
 
 ```js
 voice.init();
 ```
 
-## Speech Recognition
+## Voice Recognition
 
-### VoiceComand
+### VoiceCommand
 
-For voice recognition you need use VoiceComand object.  
+For voice recognition you need use VoiceComand object.
 
 ```js
 function VoiceCommand() {
@@ -42,14 +42,14 @@ Each VoiceCommand includes three fields:
 
 * _name_: name of expresion
 
-* _expressions_: if any expression match whit the recognized text the voice command will be execute
+* _expressions_: if any expression match with the recognized text the voice command will be execute
 
 * _execute_: function to call. It recives three parameters
 
   * _exp_: number of expresion that matched
-          
-  * _m_: array of parts of text that match whit each token in expression. m[0] includes all text
-          
+
+  * _m_: array of parts of text that match with each token in expression. m[0] includes all text
+
   * _voice_:reference to voice object
 
 Example:
@@ -61,40 +61,13 @@ vc1.expressions[0] = "bot# hello";
 vc1.execute = function(exp, m, voice) {
 		voice.talk("hi person");
 };
-
-var vc4 = new VoiceCommand();
-vc4.name="search";
-vc4.expressions[0] = "bot# search any#";
-vc4.execute = function(exp, m, voice) {
-    //m[3] - any#
-		openWeb("https://www.google.com/webhp?ie=UTF-8#safe=off&q="+m[3]+"&*");
-	};
-
-var vc5 = new VoiceCommand();
-vc5.name = "my name";
-vc5.expressions[0] = "bot# mynameis any#";
-vc5.execute = function(exp, m, voice) {
-		voice.data["name"] = m[3];//m[3] - any#
-		voice.talk("hi "+"$name");
-	};
-```
-
-You need adds VoiceCommands to voice object:
-
-```js
-voice.addVoiceCommand(vc1);
-voice.addVoiceCommand(vc2);
-voice.addVoiceCommand(vc3);
-voice.addVoiceCommand(vc4);
-voice.addVoiceCommand(vc5);
-voice.addVoiceCommand(vc6);
 ```
 
 ### Expressions
 
-"Expressions" are a string whit a regular expressions. Agent compare any thing you say whit all exoresions in a VoiceCommand if any match execute the function in the VoiceCommand field.
+"Expressions" are regular expressions. Agent compare any thing you say with all exoresions in a VoiceCommand if any match execute the function in the VoiceCommand field.
 
-Expressions doesn't uses regular expressions directly, you need create tokens. Tokens are regular expressions that match whit a part of text.
+Expressions doesn't uses regular expressions directly, you need create tokens. Tokens are regular expressions that match with a part of text.
 
 ```js
 var useful_tokens = {
@@ -104,7 +77,7 @@ var useful_tokens = {
 	"any#": ".*"
 }
 ```
-After you can use tokens to create a expression: 
+After you can use tokens to create a expression:
 
 ```js
 vc1.expressions[0] = "bot# hello";
@@ -120,9 +93,48 @@ You can add modifiers to tokens:
 
 * _*_: repeat token one or more times
 * _?_: repeat token zero or one time
+* _|_: token1|token2 means that one of tokens must be
 
 Maybe you prefer create you own regular expresion, no problem you only need put _*_ as first character in expression.
 
 
 ## Speech Synthesis
+
+To use speech text you must use _talk_ command
+
+```js
+voice.talk("hi person"); ```
+
+But that is so simple.
+
+First, you need create a dictionary of tokens with many options for token.
+When you generates and expresion token will be remplace randomly by one of options.
+
+```js
+var english_dictionary =  {
+	"hi": ["hi", "hello"],
+	"person": ["person","human"],
+	"yes": ["yes","afirmative"],
+	"no": ["no","negative"],
+	"ok": ["ok", "right"]
+};
+```
+Now you can add dictionaries to generate expresions
+
+```js
+voice.addDictionary(english_dictionary);
+```
+_addDictionary_ have two params
+* _dictionary_ : dictionay of tokens to words
+* _topic_ : no obligatory, dictionary only will be used when generateExpression recive the same topic.
+
+
+```js
+this.generateExpression = function(text, dataMap, topics){
+```
+_text_: 
+* _*_ - Any phrase start with _*_ is translate literaly
+* _#text_ - Any word start with _#_ is translate literaly
+* _$data_ - Remplace $data by dataMap[data]
+dataMap
 
