@@ -1,14 +1,35 @@
-# jsBotVoice
-Library to help you to create voice bots in the browser
+<!-- TOC -->
 
-## Load
+- [jsBotVoice](#jsbotvoice)
+- [Load](#load)
+- [Voice](#voice)
+    - [Create](#create)
+    - [Voice Recognition](#voice-recognition)
+        - [VoiceCommand](#voicecommand)
+        - [Expressions](#expressions)
+    - [Speech Synthesis](#speech-synthesis)
+        - [Dictionaries](#dictionaries)
+    - [Data](#data)
+    - [Topics](#topics)
+    - [voice.analyze](#voiceanalyze)
+- [API Summary](#api-summary)
+- [Example](#example)
+
+<!-- /TOC -->
+
+# jsBotVoice
+Library to help you to create voice bots in browser
+
+# Load
 
 ```html
 <script src="js/voice/voice.js"></script>
 <script src="js/voice/voiceBrowser.js"></script>
 ```
 
-## Voice
+# Voice
+
+## Create
 
 First you need to create a Voice object. That object can receive as parameter the language. If you don't pass it uses the browser language.
 
@@ -16,12 +37,6 @@ First you need to create a Voice object. That object can receive as parameter th
 var voice = new Voice();//uses language from browser
 var voice = new Voice("es");//spanish
 var voice = new Voice("en");//english
-```
-
-You need initialize object
-
-```js
-voice.init();
 ```
 
 ## Voice Recognition
@@ -59,8 +74,21 @@ var vc1 = new VoiceCommand();
 vc1.name="hi";
 vc1.expressions[0] = "bot# hello";
 vc1.execute = function(exp, m, voice) {
-		voice.talk("hi person");
+	voice.talk("hi person");
 };
+```
+
+After create voice command you need add this with _addVoiceCommand_
+
+```js
+voice.addVoiceCommand(vcmd, topic);
+```
+
+_vcmd_: VoiceCommand to be added   
+_topic_: No obligatory. Conversation topic, voiceCommand will be used only with this topic. Default value is _"default"_
+
+```js
+voice.addVoiceCommand(vc1);
 ```
 
 ### Expressions
@@ -76,39 +104,78 @@ var useful_tokens = {
 	"number#": "[0-9]*",
 	"any#": ".*"
 }
+
+
+var english_tokens = {
+	"hello": "hi|hello",
+	"sayhelloto": "say hello to",
+	"sayhello": "say hello",
+	"sing": "sing",
+	"salsa": "salsa|salsita",
+	"bachata": "bachata",
+	"mynameis": "my name is|i am",
+	"search": "search",
+	"repeat": "say|repeat"
+}
 ```
 After you can use tokens to create a expression:
 
 ```js
+var vc1 = new VoiceCommand();
+vc1.name="hi";
 vc1.expressions[0] = "bot# hello";
+vc1.execute = function(exp, m, voice) {
+	voice.talk("hi person");
+};
 
-vc2.expressions[0] = "bot# sayhello any#?";
 
-var exp = "bot# sing";
-vc3.expressions[0] = exp+" bachata";
-vc3.expressions[1] = exp+" salsa";
+var vc2 = new VoiceCommand();
+vc2.name="say hello to";
+vc2.expressions[0] = "bot# sayhelloto any#?";
+vc2.expressions[1] = "bot# sayhello";
+vc2.execute = function(exp, m, voice) {
+	if(exp == 0 && m.length > 3)
+		voice.talk("hi "+"#"+m[3]);//m[3] - any#
+	else
+		voice.talk("hi");
+};
 ```
 
 You can add modifiers to tokens:
 
-* _*_: repeat token one or more times
-* _?_: repeat token zero or one time
-* _|_: token1|token2 means that one of tokens must be
+* _*_: Repeat token one or more times
+* _?_: Repeat token zero or one time
+* _|_: Token1|token2 one of tokens must be in the expresion
 
-Maybe you prefer create you own regular expresion, no problem you only need put _*_ as first character in expression.
-
+Maybe you prefer create you own regular expresion, no problem, you only need put _*_ as first character in expression.
 
 ## Speech Synthesis
 
 To use speech text you must use _talk_ command
 
 ```js
-voice.talk("hi person"); ```
+voice.talk(text, topics); 
+```
 
-But that is so simple.
+_text_: 
+* _*_: Any phrase start with _*_ is translate literaly
+* _#text_: Any word start with _#_ is translate literaly
+* _$name_: Remplace $data by voice.data[name]  
 
-First, you need create a dictionary of tokens with many options for token.
-When you generates and expresion token will be remplace randomly by one of options.
+_topics_: No obligatory. Array of one or more topics. Default value is _voice.topics_ value.
+
+```js
+voice.talk("hi person"); 
+
+voice.data["name"] = "Cubiwan";
+voice.talk("hi $name"); //hello cubiwan
+
+voice.talk("*hello my friend");
+```
+
+### Dictionaries
+
+You need create a dictionary of tokens. you could use few options for token. When you generates an expresion token will be remplace randomly by one of options.
 
 ```js
 var english_dictionary =  {
@@ -124,17 +191,48 @@ Now you can add dictionaries to generate expresions
 ```js
 voice.addDictionary(english_dictionary);
 ```
-_addDictionary_ have two params
-* _dictionary_ : dictionay of tokens to words
-* _topic_ : no obligatory, dictionary only will be used when generateExpression recive the same topic.
+_addDictionary_: Have two params
+* _dictionary_: Dictionay of tokens to words
+* _topic_: No obligatory, dictionary only will be used when generateExpression recive the same topic. Default value is _"default"_
 
+
+## Data
+
+Is used to save datas to be used in Speech Synthesis with command _talk_ remplacing $data tokens.
 
 ```js
-this.generateExpression = function(text, dataMap, topics){
+voice.data["name"] = "Cubiwan";
+voice.talk("hi $name"); //hello cubiwan
 ```
-_text_: 
-* _*_ - Any phrase start with _*_ is translate literaly
-* _#text_ - Any word start with _#_ is translate literaly
-* _$data_ - Remplace $data by dataMap[data]
-dataMap
 
+## Topics
+
+Array of topics use as default value of param _topics_ . By default value is _["default"]_
+
+```js
+voice.topics.push("sing");
+```
+
+## voice.analyze
+
+If you don't need use voice recognition but you can use expresions to analyze texts you can use function analyze.
+
+```js
+voice.analyze(text, topics);
+```
+
+_text_: Text to analyze  
+_topics_: No obligatory. Array of one or more topics. Default value is _voice.topics_ value.
+
+# API Summary
+
+* new Voice(lang);
+* voice.init();
+* voice.addVoiceCommand(vcmd, topic);
+* voice.analyze(text, topics);
+* voice.talk(text, topics); 
+* voice.addDictionary(english_dictionary);
+* voice.data = [];
+* voice.topics = ["default"];
+
+# Example
