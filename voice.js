@@ -34,8 +34,8 @@ function Recognition(){
 		var expression = "";
 
 		if(text.charAt(0)=='*') { //when fisrt chars is * indicates that is a regular expresion
-        expression = text.substr(1);
-    }else{
+        	expression = text.substr(1);
+   		}else{
 			var tokens = text.split(" ");
 			for (var i = 0; i < tokens.length; i++) {
 				var token = tokens[i];
@@ -78,33 +78,33 @@ function Synthesis(){
 			topics = [topics];
 		}
 
-    var result = "";
-    if(text.charAt(0)=='*') {
-        result = text.substr(1);
-    } else {
-        var tokens = text.split(" ");
-        for (var i = 0; i < tokens.length; i++) {
-            var token = tokens[i];
-            if(token.charAt(0)=='$') {
-                result += " " + data[token.substr(1)];
-            } else if(token.charAt(0)=='#'){
-                result += " " + token.substr(1);
-            } else {
-								for(topic of topics){
-									var dictionary = this.dictionaryMap[topic];
-									if(dictionary != undefined){
-										var words = dictionary[token];
-										if(words != undefined){
-	                		var index= Math.floor(Math.random()*words.length);
-	                		result += " " + dictionary[token][index];
-										} else {
-											result += " " + token;
-										}
-									}
-							 }
-            }
-        }
-    }
+		var result = "";
+		if(text.charAt(0)=='*') {
+			result = text.substr(1);
+		} else {
+			var tokens = text.split(" ");
+			for (var i = 0; i < tokens.length; i++) {
+				var token = tokens[i];
+				if(token.charAt(0)=='$') {
+					result += " " + data[token.substr(1)];
+				} else if(token.charAt(0)=='#'){
+					result += " " + token.substr(1);
+				} else {
+					for(topic of topics){
+						var dictionary = this.dictionaryMap[topic];
+						if(dictionary != undefined){
+							var words = dictionary[token];
+							if(words != undefined){
+								var index= Math.floor(Math.random()*words.length);
+								result += " " + dictionary[token][index];
+							} else {
+								result += " " + token;
+							}
+						}
+					}
+				}
+			}
+		}
 		return result;
 	}
 
