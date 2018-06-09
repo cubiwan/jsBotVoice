@@ -8,7 +8,7 @@ function Recognition(){
 	this.keys = {};
 
 	this.addTokens = function(tokens){
-			this.keys =	Object.assign({},this.keys, tokens);
+		this.keys = Object.assign({},this.keys, tokens);
 	}
 
 	this.processToken = function(tk){
