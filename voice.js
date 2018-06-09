@@ -144,7 +144,8 @@ function Voice(lang) {
 	//text - text to be analized
 	//topics - topics to be selected (if null use this.topics)
 	this.analyze = function(text, topics) {
-		if(this.depth > this.maxDepth) return;
+		if(this.depth > this.maxDepth) 
+			return;
 
 		this.depth++;
 
