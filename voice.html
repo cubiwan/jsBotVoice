@@ -1,0 +1,181 @@
+<html>
+
+<title>Chispas Web Agent</title>
+<script src="js/voice/voice.js"></script>
+<script src="js/voice/voiceBrowser.js"></script>
+<script>
+
+var useful_tokens = {
+	"bot#": "chispa|chispas",
+	"word#": "[a-bA-B]*",
+	"number#": "[0-9]*",
+	"any#": ".*"
+}
+
+var spanish_tokens = {
+	"hello": "hola|que tal",
+	"sayhelloto": "saluda a|di hola a",
+	"sayhello": "saluda|di hola",
+	"sing": "canta|cantar",
+	"salsa": "salsa|salsita",
+	"bachata": "bachata",
+	"mynameis": "mi nombre es|me llamo",
+	"search": "busca",
+	"repeat": "di|repite"
+}
+
+var english_tokens = {
+	"hello": "hi|hello",
+	"sayhelloto": "say hello to",
+	"sayhello": "say hello",
+	"sing": "sing",
+	"salsa": "salsa|salsita",
+	"bachata": "bachata",
+	"mynameis": "my name is|i am",
+	"search": "search",
+	"repeat": "say|repeat"
+}
+
+var english_dictionary =  {
+	"hi": ["hi", "hello"],
+	"person": ["person","human"],
+	"yes": ["yes","afirmative"],
+	"no": ["no","negative"],
+	"ok": ["ok", "de acuerdo", "hecho"]
+};
+
+var spanish_dictionary =  {
+	"hi": ["hola", "saludos"],
+	"person": ["humano","ser"],
+	"yes": ["si","afirmativo"],
+	"no": ["no","negativo"],
+	"ok": ["vale", "de acuerdo", "hecho"]
+};
+
+
+var voice = new Voice();//take language from browser
+//var voice = new Voice("es");//spanish
+//var voice = new Voice("en");//english
+console.log("Language: "+voice.lang);
+if(voice.lang == "es"){
+	voice.addDictionary(spanish_dictionary);
+	voice.addRecognitionTokens(useful_tokens);
+	voice.addRecognitionTokens(spanish_tokens);
+} else {
+	voice.addDictionary(english_dictionary);
+	voice.addRecognitionTokens(useful_tokens);
+	voice.addRecognitionTokens(english_dictionary);
+}
+
+voice.init();
+
+
+
+var vc1 = new VoiceCommand();
+vc1.name="hi";
+vc1.expressions[0] = "bot# hello";
+vc1.execute = function(exp, m, voice) {
+	voice.talk("hi person");
+};
+
+
+var vc2 = new VoiceCommand();
+vc2.name="say hello to";
+vc2.expressions[0] = "bot# sayhelloto any#?";
+vc2.expressions[1] = "bot# sayhello";
+vc2.execute = function(exp, m, voice) {
+	if(exp == 0 && m.length > 3)
+		voice.talk("hi "+"#"+m[3]);//m[3] - any#
+	else
+		voice.talk("hi");
+};
+
+var vc3 = new VoiceCommand();
+vc3.name="sing";
+var exp = "bot# sing";
+vc3.expressions[0] = exp+" bachata";
+vc3.expressions[1] = exp+" salsa";
+vc3.execute = function(exp, m, voice) {
+	if(exp == 0)
+		voice.talk("*Yo quiero estar contigo, vivir contigo. Bailar contigo, tener contigo una noche locaaaaa");
+	else
+		voice.talk("*Me sube la bilirrubina. Ay! me sube la bilirrubina cuando te miro y no me miras");
+};
+
+var vc4 = new VoiceCommand();
+vc4.name="search";
+vc4.expressions[0] = "bot# search any#";
+vc4.execute = function(exp, m, voice) {
+	//m[3] - any#
+	openWeb("https://www.google.com/webhp?ie=UTF-8#safe=off&q="+m[3]+"&*");
+};
+
+var vc5 = new VoiceCommand();
+vc5.name = "my name";
+vc5.expressions[0] = "bot# mynameis any#";
+vc5.execute = function(exp, m, voice) {
+	voice.data["name"] = m[3];//m[3] - any#
+	voice.talk("hi "+"$name");
+};
+
+var vc6 = new VoiceCommand();
+vc6.name = "repeat";
+vc6.expressions[0] = "bot# repeat any#";
+vc6.execute = function(exp, m, voice) {
+	voice.talk("*"+m[3]);//m[3] - any#
+};
+
+
+voice.addVoiceCommand(vc1);
+voice.addVoiceCommand(vc2);
+voice.addVoiceCommand(vc3);
+voice.addVoiceCommand(vc4);
+voice.addVoiceCommand(vc5);
+voice.addVoiceCommand(vc6);
+
+
+function openWeb(url){
+	var win = window.open('https://google.es', '_blank');
+	win.focus();
+}
+
+
+
+function say(){
+	voice.analyze("chispas "+document.getElementById("say").value);
+};
+
+</script>
+<button onclick="say()">Chispas</button><input id="say" size="70"/></br>
+<ul>
+  <li>bot# hello</li>
+  <li>bot# sayhello any#?</li>
+  <li>bot# sing</li>
+	<li>bot# search any#</li>
+	<li>bot# mynameis any#</li>
+	<li>bot# repeat any#</li>
+</ul>
+<div>
+{
+		"bot#": "chispa|chispas",
+		"word#": "[a-bA-B]*",
+		"number#": "[0-9]*",
+		"any#": ".*"
+	}
+	<br><br>
+	<b>English:</b><br>
+		"hi": ["hi", "hello"]<br>
+		"person": ["person","human"]<br>
+		"yes": ["yes","afirmative"]<br>
+		"no": ["no","negative"]<br>
+		"ok": ["ok", "de acuerdo", "hecho"]<br>
+	<br><br>
+		"hi": ["hola", "saludos"]<br>
+		"person": ["humano","ser"]<br>
+		"yes": ["si","afirmativo"]<br>
+		"no": ["no","negativo"]<br>
+		"ok": ["vale", "de acuerdo", "hecho"]<br>
+</div>
+</body>
+
+</html>
