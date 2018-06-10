@@ -1,6 +1,5 @@
 <!-- TOC -->
 
-- [jsBotVoice](#jsbotvoice)
 - [Load](#load)
 - [Voice](#voice)
     - [Create](#create)
@@ -16,9 +15,6 @@
 - [Example](#example)
 
 <!-- /TOC -->
-
-# jsBotVoice
-Library to help you to create voice bots in browser
 
 # Load
 
@@ -236,3 +232,4 @@ _topics_: No obligatory. Array of one or more topics. Default value is _voice.to
 * voice.topics = ["default"];
 
 # Example
+[Demo](https://cubiwan.github.io/jsBotVoice/voice.html)
