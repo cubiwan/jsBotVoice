@@ -49,15 +49,10 @@ function VoiceCommand() {
 Each VoiceCommand includes three fields:
 
 * _name_: name of expresion
-
 * _expressions_: if any expression match with the recognized text the voice command will be execute
-
 * _execute_: function to call. It recives three parameters
-
   * _exp_: number of expresion that matched
-
   * _m_: array of parts of text that match with each token in expression. m[0] includes all text
-
   * _voice_:reference to voice object
 
 Example:
