@@ -1,7 +1,5 @@
 <!-- TOC -->
 
-<!-- TOC -->
-
 - [Load](#load)
 - [Create new object Voice](#create-new-object-voice)
 - [Voice Recognition](#voice-recognition)
