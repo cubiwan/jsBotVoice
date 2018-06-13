@@ -1,16 +1,17 @@
 <!-- TOC -->
 
+<!-- TOC -->
+
 - [Load](#load)
-- [Voice](#voice)
-    - [Create](#create)
-    - [Voice Recognition](#voice-recognition)
-        - [VoiceCommand](#voicecommand)
-        - [Expressions](#expressions)
-    - [Speech Synthesis](#speech-synthesis)
-        - [Dictionaries](#dictionaries)
-    - [Data](#data)
-    - [Topics](#topics)
-    - [voice.analyze](#voiceanalyze)
+- [Create new object Voice](#create-new-object-voice)
+- [Voice Recognition](#voice-recognition)
+    - [VoiceCommand](#voicecommand)
+    - [Expressions](#expressions)
+- [Speech Synthesis](#speech-synthesis)  
+    - [Dictionaries](#dictionaries)
+- [Data](#data)
+- [Topics](#topics)
+- [voice.analyze](#voiceanalyze)
 - [API Summary](#api-summary)
 - [Example](#example)
 
@@ -23,9 +24,7 @@
 <script src="js/voice/voiceBrowser.js"></script>
 ```
 
-# Voice
-
-## Create
+# Create new object Voice
 
 First you need to create a Voice object. That object can receive as parameter the language. If you don't pass it uses the browser language.
 
@@ -35,9 +34,9 @@ var voice = new Voice("es");//spanish
 var voice = new Voice("en");//english
 ```
 
-## Voice Recognition
+# Voice Recognition
 
-### VoiceCommand
+## VoiceCommand
 
 For voice recognition you need use VoiceComand object.
 
@@ -87,7 +86,7 @@ _topic_: No obligatory. Conversation topic, voiceCommand will be used only with 
 voice.addVoiceCommand(vc1);
 ```
 
-### Expressions
+## Expressions
 
 "Expressions" are regular expressions. Agent compare any thing you say with all exoresions in a VoiceCommand if any match execute the function in the VoiceCommand field.
 
@@ -145,7 +144,7 @@ You can add modifiers to tokens:
 
 Maybe you prefer create you own regular expresion, no problem, you only need put _*_ as first character in expression.
 
-## Speech Synthesis
+# Speech Synthesis
 
 To use speech text you must use _talk_ command
 
@@ -192,7 +191,7 @@ _addDictionary_: Have two params
 * _topic_: No obligatory, dictionary only will be used when generateExpression recive the same topic. Default value is _"default"_
 
 
-## Data
+# Data
 
 Is used to save datas to be used in Speech Synthesis with command _talk_ remplacing $data tokens.
 
@@ -201,7 +200,7 @@ voice.data["name"] = "Cubiwan";
 voice.talk("hi $name"); //hello cubiwan
 ```
 
-## Topics
+# Topics
 
 Array of topics use as default value of param _topics_ . By default value is _["default"]_
 
@@ -209,7 +208,7 @@ Array of topics use as default value of param _topics_ . By default value is _["
 voice.topics.push("sing");
 ```
 
-## voice.analyze
+# voice.analyze
 
 If you don't need use voice recognition but you can use expresions to analyze texts you can use function analyze.
 
