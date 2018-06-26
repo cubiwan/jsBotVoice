@@ -134,17 +134,17 @@ vc2.execute = function(exp, m, voice) {
 };
 ```
 
-You can add modifiers to tokens:
+Puedes añadir modificadores a los tokes:
 
-* _*_: Repeat token one or more times
-* _?_: Repeat token zero or one time
-* _|_: Token1|token2 one of tokens must be in the expresion
+* _*_: El token se repite una o más veces
+* _?_: El token se repite cero o una veces
+* _|_: Token1|token2 uno de los tokens debe de estar en el texto
 
 Maybe you prefer create you own regular expresion, no problem, you only need put _*_ as first character in expression.
 
-# Speech Synthesis
+# Sintesis de voz
 
-To use speech text you must use _talk_ command
+Para la sintesis de voz se usa el comando _talk_ 
 
 ```js
 voice.talk(text, topics); 
@@ -208,14 +208,14 @@ voice.topics.push("sing");
 
 # voice.analyze
 
-If you don't need use voice recognition but you can use expresions to analyze texts you can use function analyze.
+Si no necesitas la parte de reconocimiento de voz pero quieres usar la libreria para analizar textos puede recurrir a la función _analyze_
 
 ```js
 voice.analyze(text, topics);
 ```
 
 _text_: Texto para analizar
-_topics_: No es olbigatorio. Array de uno o mas tópicos. su valor por defecto es el de _voice.topics_.
+_topics_: No es obligatorio. Array de uno o más tópicos. Su valor por defecto es el de _voice.topics_.
 
 # Resumen de la API 
 
