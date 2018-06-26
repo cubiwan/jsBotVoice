@@ -1,20 +1,19 @@
 <!-- TOC -->
 
-- [Load](#load)
-- [Create new object Voice](#create-new-object-voice)
-- [Voice Recognition](#voice-recognition)
+- [Cargar](#cargar)
+- [Crear objeto Voice](#crear-objeto-voice)
+- [Reconocimiento del habla](#reconocimiento-del-habla)
     - [VoiceCommand](#voicecommand)
     - [Expressions](#expressions)
-- [Speech Synthesis](#speech-synthesis)  
-    - [Dictionaries](#dictionaries)
-- [Data](#data)
-- [Topics](#topics)
+- [Sintesis de voz](#sintesis-de-voz)
+    - [Diccionarios](#diccionarios)
+- [voice.data](#voicedata)
+- [voice.topics](#voicetopics)
 - [voice.analyze](#voiceanalyze)
-- [API Summary](#api-summary)
-- [Example](#example)
+- [Resumen de la API](#resumen-de-la-api)
+- [Ejemplo](#ejemplo)
 
 <!-- /TOC -->
-
 # Cargar
 
 ```html
@@ -150,7 +149,7 @@ Para la sintesis de voz se usa el comando _talk_
 voice.talk(text, topics); 
 ```
 
-_text_: 
+_text_: Texto que se va decir. Hay diferentes modificadores.
 * _*_: Any phrase start with _*_ is translate literaly
 * _#text_: Any word start with _#_ is translate literaly
 * _$name_: Remplace $data by voice.data[name]  
@@ -166,7 +165,7 @@ voice.talk("hi $name"); //hello cubiwan
 voice.talk("*hello my friend");
 ```
 
-### Dictionaries
+## Diccionarios
 
 You need create a dictionary of tokens. you could use few options for token. When you generates an expresion token will be remplace randomly by one of options.
 
@@ -189,18 +188,18 @@ _addDictionary_: Have two params
 * _topic_: No obligatory, dictionary only will be used when generateExpression recive the same topic. Default value is _"default"_
 
 
-# Data
+# voice.data
 
-Is used to save datas to be used in Speech Synthesis with command _talk_ remplacing $data tokens.
+_voice.data_ es un hasmap que se usa para guardar datos para usarlos con el comando _talk_ reemplazndo los tokens con $ por su valor: _$token_ -> _voice.data['$token']_
 
 ```js
 voice.data["name"] = "Cubiwan";
 voice.talk("hi $name"); //hello cubiwan
 ```
 
-# Topics
+# voice.topics
 
-Array of topics use as default value of param _topics_ . By default value is _["default"]_
+_voice.topics_ es un array de tópicos que se usa como valor por defecto del parámetro _topics_ en las funciones. Su valor por defecto es _["default"]_
 
 ```js
 voice.topics.push("sing");
