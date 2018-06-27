@@ -1,3 +1,5 @@
+[Español](https://cubiwan.github.io/jsBotVoice/README_ES) # [English](https://cubiwan.github.io/jsBotVoice/)
+
 <!-- TOC -->
 
 - [Load](#load)
@@ -5,10 +7,10 @@
 - [Voice Recognition](#voice-recognition)
     - [VoiceCommand](#voicecommand)
     - [Expressions](#expressions)
-- [Speech Synthesis](#speech-synthesis)  
+- [Speech Synthesis](#speech-synthesis)
     - [Dictionaries](#dictionaries)
-- [Data](#data)
-- [Topics](#topics)
+- [voice.data](#voicedata)
+- [voice.topics](#voicetopics)
 - [voice.analyze](#voiceanalyze)
 - [API Summary](#api-summary)
 - [Example](#example)
@@ -145,7 +147,7 @@ To use speech text you must use _talk_ command
 voice.talk(text, topics); 
 ```
 
-_text_: 
+_text_: test to read. Each word is a token from dictionary. You can use these specail characters.
 * _*_: Any phrase start with _*_ is translate literaly
 * _#text_: Any word start with _#_ is translate literaly
 * _$name_: Remplace $data by voice.data[name]  
@@ -161,7 +163,7 @@ voice.talk("hi $name"); //hello cubiwan
 voice.talk("*hello my friend");
 ```
 
-### Dictionaries
+## Dictionaries
 
 You need create a dictionary of tokens. you could use few options for token. When you generates an expresion token will be remplace randomly by one of options.
 
@@ -184,16 +186,16 @@ _addDictionary_: Have two params
 * _topic_: No obligatory, dictionary only will be used when generateExpression recive the same topic. Default value is _"default"_
 
 
-# Data
+# voice.data
 
-Is used to save datas to be used in Speech Synthesis with command _talk_ remplacing $data tokens.
+It is a hashmap use to storage datas to be used in Speech Synthesis with command _talk_ remplacing $token tokens. _$token_ -> _voice.data['token']_
 
 ```js
 voice.data["name"] = "Cubiwan";
 voice.talk("hi $name"); //hello cubiwan
 ```
 
-# Topics
+# voice.topics
 
 Array of topics use as default value of param _topics_ . By default value is _["default"]_
 
