@@ -1,3 +1,5 @@
+[Español](https://cubiwan.github.io/jsBotVoice/README_ES) # [English](https://cubiwan.github.io/jsBotVoice/)
+
 <!-- TOC -->
 
 - [Cargar](#cargar)
