@@ -181,6 +181,16 @@ function Voice(lang) {
 		this.depth--;
 		console.log("Analyzed");
 	}
+	
+	this.generateExpression = function(text, data, topics){
+		data = data || this.data;
+		topics = topics || this.topics;
+
+		if(typeof topics == "string"){
+			topics = [topics];
+		}
+		return this.synthesis.generateExpression(text, data, topics);
+	}
 
 	this.resultRecognition = function(sentence, score) {
 		console.log(sentence + ': ' + score);
