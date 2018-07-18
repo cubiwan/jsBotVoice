@@ -2,18 +2,19 @@
 
 <!-- TOC -->
 
-- [Cargar](#cargar)
-- [Crear objeto Voice](#crear-objeto-voice)
-- [Reconocimiento del habla](#reconocimiento-del-habla)
+- [Load](#load)
+- [Create new object Voice](#create-new-object-voice)
+- [Voice Recognition](#voice-recognition)
     - [VoiceCommand](#voicecommand)
     - [Expressions](#expressions)
-- [Sintesis de voz](#sintesis-de-voz)
-    - [Diccionarios](#diccionarios)
+- [Speech Synthesis](#speech-synthesis)
+    - [Dictionaries](#dictionaries)
 - [voice.data](#voicedata)
 - [voice.topics](#voicetopics)
 - [voice.analyze](#voiceanalyze)
-- [Resumen de la API](#resumen-de-la-api)
-- [Ejemplo](#ejemplo)
+- [voice.generateExpression](#voicegenerateexpression)
+- [API Summary](#api-summary)
+- [Example](#example)
 
 <!-- /TOC -->
 # Cargar
@@ -217,6 +218,20 @@ voice.analyze(text, topics);
 
 _text_: Texto para analizar
 _topics_: No es obligatorio. Array de uno o más tópicos. Su valor por defecto es el de _voice.topics_.
+
+
+# voice.generateExpression
+
+Si quieres generar frases a partir de tokens pero sin la parte de la sintesis de voz puedes usar la función generateExpression
+
+```js
+voice.generateExpression = function(text, data, topics)
+```
+
+_text_: Tokens a tranformar en expresion
+_data_: No es obligatorio. Mapa con los datos. su valor por defecto es _voice.data_.
+_topics_: No es obligatorio. Array de uno o más tópicos. Su valor por defecto es el de _voice.topics_.
+
 
 # Resumen de la API 
 
