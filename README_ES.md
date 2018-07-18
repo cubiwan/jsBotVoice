@@ -239,6 +239,7 @@ _topics_: No es obligatorio. Array de uno o más tópicos. Su valor por defecto 
 * voice.init();
 * voice.addVoiceCommand(vcmd, topic);
 * voice.analyze(text, topics);
+* voice.generateExpression(text, data, topics);
 * voice.talk(text, topics); 
 * voice.addDictionary(english_dictionary);
 * voice.data = [];
