@@ -12,7 +12,7 @@
 - [voice.data](#voicedata)
 - [voice.topics](#voicetopics)
 - [voice.analyze](#voiceanalyze)
-- [voice.generateExpression](#voicegenerateExpression)
+- [voice.generateExpression](#voicegenerateexpression)
 - [API Summary](#api-summary)
 - [Example](#example)
 
