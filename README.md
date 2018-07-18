@@ -12,6 +12,7 @@
 - [voice.data](#voicedata)
 - [voice.topics](#voicetopics)
 - [voice.analyze](#voiceanalyze)
+- [voice.generateExpression](#voice.generateExpression)
 - [API Summary](#api-summary)
 - [Example](#example)
 
@@ -214,12 +215,25 @@ voice.analyze(text, topics);
 _text_: Text to analyze  
 _topics_: No obligatory. Array of one or more topics. Default value is _voice.topics_ value.
 
+# voice.generateExpression
+
+If you want generate a expresion but no transform that in voice you can use function generateExpression
+
+```js
+voice.generateExpression = function(text, data, topics)
+```
+
+_text_: Tokens to transform in expression 
+_data_: No obligatory. Map with data. Default value is _voice.data_.
+_topics_: No obligatory. Array of one or more topics. Default value is _voice.topics_ value.
+
 # API Summary
 
 * new Voice(lang);
 * voice.init();
 * voice.addVoiceCommand(vcmd, topic);
 * voice.analyze(text, topics);
+* voice.generateExpression(text, data, topics);
 * voice.talk(text, topics); 
 * voice.addDictionary(english_dictionary);
 * voice.data = [];
